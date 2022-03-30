@@ -1,0 +1,17 @@
+SECRET_KEY: ""
+
+DB:
+  DIALECT: "sqlite"
+  USERNAME: ""
+  PASSWORD: ""
+  HOST: ""
+  PORT: ""
+  NAME: "db.sqlite"
+PAYLOAD:
+  EMAIL: ["event_id", "from_email", "email_subject", "email_content", "schedule_at"]
+  RECIPIENT: "to_email"
+CONST:
+  EMAIL:
+    INSERT_STATUS: "PENDING"
+    FAIL_STATUS: "FAILED"
+    SUCCESS_STATUS: "SENT"
