@@ -1,13 +1,15 @@
 from typing import Dict, Any, List, Union
 
 
-def success_response(message: str, data: List[Dict[str, Any]] = []) -> Dict[str, Any]:
+def success_response(message: str, data: List[Dict[str, Any]] = None) -> Dict[str, Any]:
     """Generate template for success response
     
     :param message: simple message that tells request success
     :param data: data that will be delivered
     :return: dictionary that will be used as success response
     """
+
+    data = [] if data is None else data
 
     return { "result": "Success", "message": message, "data": data }
 
