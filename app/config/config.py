@@ -21,5 +21,7 @@ STATUS_SENT = os.environ.get("STATUS_SENT")
 
 EMAIL = os.environ.get("EMAIL")
 PASSWORD = os.environ.get("PASSWORD")
-SMTP_PORT = os.environ.get("SMTP_PORT")
+SMTP_PORT = int(os.environ.get("SMTP_PORT"))
 SMTP_SERVER = os.environ.get("SMTP_SERVER")
+
+CRON_INTERVAL = int(os.environ.get("CRON_INTERVAL"))

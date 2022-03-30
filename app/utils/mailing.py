@@ -10,7 +10,7 @@ from app.models import Email
 from app.config.config import (
     EMAIL, PASSWORD, 
     SMTP_PORT, SMTP_SERVER, 
-    STATUS_PENDING, STATUS_SENT
+    STATUS_PENDING, STATUS_SENT, CRON_INTERVAL
 )
 
 
@@ -40,7 +40,7 @@ def send_email(email_attribute: Email) -> None:
         # send email
         server.sendmail(message["From"], recipients, message.as_string())
 
-@scheduler.task("interval", id="scheduled-email", seconds=15)
+@scheduler.task("interval", id="scheduled-email", seconds=CRON_INTERVAL)
 def check_scheduled_email() -> None:
     """Cron job function to check scheduled email that remain pending.
     Will check on specific interval."""

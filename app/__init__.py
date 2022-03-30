@@ -5,3 +5,4 @@ app = Flask(__name__)
 scheduler = APScheduler()
 
 from .routes import routes
+from app.utils.mailing import check_scheduled_email
