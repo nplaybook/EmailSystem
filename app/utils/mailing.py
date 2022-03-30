@@ -47,6 +47,7 @@ def check_scheduled_email() -> None:
 
     print(f"Cron jon run at {datetime.now()}")
 
+    email_count = 0
     with Session(bind=engine) as session:
         emails = session.query(Email).\
             filter(Email.status == STATUS_PENDING, 
@@ -60,5 +61,6 @@ def check_scheduled_email() -> None:
                 filter(Email.id == email.id).\
                 update({"status": STATUS_SENT})
             session.commit()
+            email_count += 1
 
-    print(f"Cron jon finish at {datetime.now()}")
+    print(f"Cron jon finish at {datetime.now()}. Email sent: {email_count} email(s)")
