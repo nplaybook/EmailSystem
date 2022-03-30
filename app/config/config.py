@@ -15,9 +15,9 @@ DB_NAME = os.environ.get("DB_NAME")
 PAYLOAD_EMAIL = os.environ.get("PAYLOAD_EMAIL")
 PAYLOAD_RECIPIENT = os.environ.get("PAYLOAD_RECIPIENT")
 
-INSERT_STATUS = os.environ.get("INSERT_STATUS")
+STATUS_PENDING = os.environ.get("STATUS_PENDING")
 FAIL_STATUS = os.environ.get("FAIL_STATUS")
-SUCCESS_STATUS = os.environ.get("SUCCESS_STATUS")
+STATUS_SENT = os.environ.get("STATUS_SENT")
 
 EMAIL = os.environ.get("EMAIL")
 PASSWORD = os.environ.get("PASSWORD")

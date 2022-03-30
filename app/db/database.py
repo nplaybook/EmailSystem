@@ -20,5 +20,5 @@ with app.app_context():
         {DB_DIALECT}://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}
         """
 
-engine = create_engine(URI, echo=True)
+engine = create_engine(URI, echo=False)
 Session = sessionmaker()
