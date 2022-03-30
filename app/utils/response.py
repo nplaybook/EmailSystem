@@ -1,4 +1,4 @@
-from typing import Dict, Any, Optional, List
+from typing import Dict, Any, List
 
 
 def success_response(message: str, data: List[Dict[str, Any]] = []) -> Dict[str, Any]:
