@@ -10,8 +10,8 @@ class Config:
     SECRET_KEY = config_content["SECRET_KEY"]
 
     DB_DIALECT = config_content["DB"]["DIALECT"]
-    DB_USERNAME = config_content["DB"]["USERNAME"]
-    DB_PASSWORD = config_content["DB"]["PASSWORD"]
+    DB_USER = config_content["DB"]["USERNAME"]
+    DB_PWD = config_content["DB"]["PASSWORD"]
     DB_HOST = config_content["DB"]["HOST"]
     DB_PORT = config_content["DB"]["PORT"]
     DB_NAME = config_content["DB"]["NAME"]
