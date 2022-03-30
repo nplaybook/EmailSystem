@@ -1,4 +1,4 @@
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Union
 
 
 def success_response(message: str, data: List[Dict[str, Any]] = []) -> Dict[str, Any]:
@@ -9,11 +9,9 @@ def success_response(message: str, data: List[Dict[str, Any]] = []) -> Dict[str,
     :return: dictionary that will be used as success response
     """
 
-    if data is None:
-        data = []
     return { "result": "Success", "message": message, "data": data }
 
-def error_response(message: str, err: str) -> Dict[str, Any]:
+def error_response(message: str, err: Union[str, List[dict]]) -> Dict[str, Any]:
     """Generate template for success response
     
     :param message: simple message that tells request fails
