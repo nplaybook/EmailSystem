@@ -3,6 +3,8 @@ from datetime import datetime
 from pydantic import BaseModel, EmailStr, Field, validator
 
 class EmailBase(BaseModel):
+    """Base data validation for table Email"""
+    
     event_id: int
     email_subject: str
     email_content: str
@@ -22,5 +24,7 @@ class EmailBase(BaseModel):
 
 
 class SaveEmailPayload(EmailBase):
+    """Use to validate save_emails payload"""
+
     to_email: List[EmailStr]
     schedule_at: datetime = Field(alias="timestamp")
