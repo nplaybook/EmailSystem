@@ -1,6 +1,4 @@
-import os
 import json
-from dotenv import load_dotenv
 
 from flask import request, redirect, url_for
 from flask import Response
@@ -8,13 +6,12 @@ from pydantic import ValidationError
 from sqlalchemy.exc import SQLAlchemyError
 
 from app import app
+from app.config.config import PAYLOAD_EMAIL, INSERT_STATUS, PAYLOAD_RECIPIENT
 from app.db import Session, engine
 from app.models import Event, Email, Recipient
 from app.schemas.email import SaveEmailPayload
 from app.utils.orm_serialize import serialize_many
 from app.utils.response import success_response, error_response
-
-load_dotenv("./env")
 
 
 @app.get("/event")
@@ -42,8 +39,8 @@ def save_emails():
         payload = payload.dict()
     
     # insert email
-    email_data: dict = {key: payload[key] for key in json.loads(os.environ["PAYLOAD_EMAIL"])}
-    email_data["status"] = os.environ["EMAIL_INSERT_STATUS"]
+    email_data: dict = {key: payload[key] for key in json.loads(PAYLOAD_EMAIL)}
+    email_data["status"] = INSERT_STATUS
     with Session(bind=engine) as session:
         try:
             new_email = Email(**email_data)  
@@ -59,7 +56,7 @@ def save_emails():
             email_id = new_email.id
 
     # insert recipient
-    to_email = payload[os.environ["PAYLOAD_RECIPIENT"]]
+    to_email = payload[PAYLOAD_RECIPIENT]
     recipient_data: list = [{"email_id": email_id, "to_email": email} for email in to_email]
     with Session(bind=engine) as session:
         try:

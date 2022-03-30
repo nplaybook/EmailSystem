@@ -1,22 +1,23 @@
 import os
-from dotenv import load_dotenv
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from app import app
+from app.config.config import (
+    DB_DIALECT, DB_NAME, DB_USERNAME, DB_PASSWORD,
+    DB_HOST, DB_PORT, DB_NAME
+)
 
 
-load_dotenv(".env")
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 
 with app.app_context():
     try:
-        URI = f"{os.environ['DB_DIALECT']}:///{BASE_DIR}/{os.environ['DB_NAME']}"
+        URI = f"{DB_DIALECT}:///{BASE_DIR}/{DB_NAME}"
     except:
         URI = f"""
-        {os.environ['DB_DIALECT']}://{os.environ['DB_USER']}:{os.environ['DB_PWD']}
-        @{os.environ['DB_HOST']}:{os.environ['DB_PORT']}/{os.environ['DB_NAME']}
+        {DB_DIALECT}://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}
         """
 
 engine = create_engine(URI, echo=True)
