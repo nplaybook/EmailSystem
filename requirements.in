@@ -5,3 +5,4 @@ pydantic
 pydantic[email]
 python-dotenv==0.20.0
 Flask-APScheduler==1.12.3
+pytest==7.1.1
