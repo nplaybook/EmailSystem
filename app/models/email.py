@@ -18,4 +18,4 @@ class Email(Base):
     status = Column(String(16), nullable=False)
     created_at = Column(DateTime(), default=datetime.now)
     updated_at = Column(DateTime(), default=datetime.now, onupdate=datetime.now)
-    recipients = relationship("Recipient")
+    recipients = relationship("Recipient", lazy='subquery')
