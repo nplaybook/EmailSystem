@@ -3,4 +3,4 @@ gunicorn==20.1.0
 sqlalchemy==1.4.32
 pydantic
 pydantic[email]
-pyyaml==5.3.1
+python-dotenv==0.20.0
