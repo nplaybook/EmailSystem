@@ -1,25 +1,18 @@
-from typing import Optional
-from pydantic import BaseModel, EmailStr, Literal
+from typing import List
+from pydantic import BaseModel, EmailStr, Field
 from datetime import datetime
 
 
 class EmailBase(BaseModel):
-    id: int
-    subject: str
-    content: str
-    from_email: EmailStr
-    schedule_at: datetime
-    status: Literal["Pending", "Sent", "Failed"]
-    created_at: Optional[datetime] = []
-    updated_at: Optional[datetime] = []
+    event_id: int
+    email_subject: str
+    email_content: str
+    from_email: EmailStr 
+    schedule_at: datetime = Field(alias="timestamp")
 
     class Config:
         orm_mode = True
 
 
-class EmailCreate(EmailBase):
-    pass
-
-
-class EmailUpdate(EmailBase):
-    status: str
+class SaveEmailPayload(EmailBase):
+    to_email: List[EmailStr]
