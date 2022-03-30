@@ -4,3 +4,4 @@ sqlalchemy==1.4.32
 pydantic
 pydantic[email]
 python-dotenv==0.20.0
+Flask-APScheduler==1.12.3
