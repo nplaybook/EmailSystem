@@ -1,4 +1,5 @@
 import json
+from typing import Dict, Any
 
 from flask import request, redirect, url_for
 from flask import Response
@@ -6,7 +7,7 @@ from pydantic import ValidationError
 from sqlalchemy.exc import SQLAlchemyError
 
 from app import app
-from app.config.config import PAYLOAD_EMAIL, INSERT_STATUS, PAYLOAD_RECIPIENT
+from app.config.config import PAYLOAD_EMAIL, STATUS_PENDING, PAYLOAD_RECIPIENT
 from app.db import Session, engine
 from app.models import Event, Email, Recipient
 from app.schemas.email import SaveEmailPayload
@@ -25,7 +26,7 @@ def get_events():
 
 
 @app.post("/save_emails")
-def save_emails():
+def save_emails() -> Dict[str, Any]:
     payload = request.json
 
     # validate payload using pydantic
@@ -40,7 +41,7 @@ def save_emails():
     
     # insert email
     email_data: dict = {key: payload[key] for key in json.loads(PAYLOAD_EMAIL)}
-    email_data["status"] = INSERT_STATUS
+    email_data["status"] = STATUS_PENDING
     with Session(bind=engine) as session:
         try:
             new_email = Email(**email_data)  
@@ -69,18 +70,6 @@ def save_emails():
                 json.dumps(error_response(message="Database error", err=err.args)), 500
             )
 
-    # check if need to send now
-    if payload["is_send_now"]:
-        redirect(url_for("send_email"), message=email_id)
-
-    # add to queue / schedule email program
-
-
     return Response(
         json.dumps(success_response(message="Request success")), 200
     )
-
-
-@app.post("/send_email")
-def send_email():
-    pass
