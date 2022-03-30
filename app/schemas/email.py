@@ -1,7 +1,6 @@
 from typing import List
 from datetime import datetime
 from pydantic import BaseModel, EmailStr, Field, validator
-from pydantic.types import constr
 
 class EmailBase(BaseModel):
     event_id: int
