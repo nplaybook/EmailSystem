@@ -1,4 +1,5 @@
 import json
+from lib2to3.pytree import Base
 from typing import Dict, Any
 
 from flask import request, redirect, url_for
@@ -17,12 +18,17 @@ from app.utils.response import success_response, error_response
 
 @app.get("/event")
 def get_events():
-    with Session(bind=engine) as session:
-        events = session.query(Event).all()
-    events = serialize_many(events)
+    try:
+        with Session(bind=engine) as session:
+            events = session.query(Event).all()
+        events = serialize_many(events)
+    except BaseException as err:
+        return Response(
+            json.dumps(error_response(message="Process error", err=err.errors())), 400
+            )
     return Response(
-        json.dumps(success_response(message="Request success", data=events)), 200
-        )
+            json.dumps(success_response(message="Request success", data=events)), 200
+            )
 
 
 @app.post("/save_emails")
@@ -71,5 +77,5 @@ def save_emails() -> Dict[str, Any]:
             )
 
     return Response(
-        json.dumps(success_response(message="Request success")), 200
+        json.dumps(success_response(message="Request success")), 201
     )
