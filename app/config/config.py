@@ -24,4 +24,6 @@ PASSWORD = os.environ.get("PASSWORD")
 SMTP_PORT = int(os.environ.get("SMTP_PORT"))
 SMTP_SERVER = os.environ.get("SMTP_SERVER")
 
+SCHEDULE_LIMIT = eval(os.environ.get("SCHEDULE_LIMIT"))
+
 CRON_INTERVAL = int(os.environ.get("CRON_INTERVAL"))
