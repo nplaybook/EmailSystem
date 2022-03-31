@@ -17,11 +17,11 @@ class TestGetEvent:
 class TestPostSavesEmail:
 
     @pytest.mark.parametrize("event_id, email_subject, email_content, from_email, to_email, timestamp, output", [
-        (1, "Test Subject", "Test Content", "sender@example.com", ["recipient@example.com"], "2016-09-08 00:00:00", 201),
-        (1, "A", "Test Content", "sender@example.com", ["recipient@example.com"], "2016-09-08 00:00:00", 201),
-        (1, "Test Subject", "A", "sender@example.com", ["recipient@example.com"], "2016-09-08 00:00:00", 201),
-        (1, "A", "A", "sender@example.com", ["recipient@example.com"], "2016-09-08 00:00:00", 201),
-        (1, "Test Subject", "Test Content", "sender@example.com", ["recipient@example.com", "recipient2@example.com"], "2016-09-08 00:00:00", 201),
+        (1, "Test Subject", "Test Content", "sender@example.com", ["recipient@example.com"], "1 Apr 2022 23:12", 201),
+        (1, "A", "Test Content", "sender@example.com", ["recipient@example.com"], "1 Apr 2022 23:12", 201),
+        (1, "Test Subject", "A", "sender@example.com", ["recipient@example.com"], "1 Apr 2022 23:12", 201),
+        (1, "A", "A", "sender@example.com", ["recipient@example.com"], "1 Apr 2022 23:12", 201),
+        (1, "Test Subject", "Test Content", "sender@example.com", ["recipient@example.com", "recipient2@example.com"], "1 Apr 2022 23:12", 201),
     ])
     def test_success(self, server, event_id, email_subject, email_content, from_email, to_email, timestamp, output):
         payload: dict = {
@@ -42,7 +42,7 @@ class TestPostSavesEmail:
 
 
     @pytest.mark.parametrize("event_id, email_subject, email_content, from_email, to_email, timestamp, output", [
-        (1, "", "Test Content", "sender@example.com", ["recipient@example.com"], "2016-09-08 00:00:00", 400)
+        (1, "", "Test Content", "sender@example.com", ["recipient@example.com"], "1 Apr 2022 23:12", 400)
     ])
     def test_fail_empty_subject(self, server, event_id, email_subject, email_content, from_email, to_email, timestamp, output):
         payload: dict = {
@@ -65,7 +65,7 @@ class TestPostSavesEmail:
 
 
     @pytest.mark.parametrize("event_id, email_subject, email_content, from_email, to_email, timestamp, output", [
-        (1, "Test Subject", "", "sender@example.com", ["recipient@example.com"], "2016-09-08 00:00:00", 400),
+        (1, "Test Subject", "", "sender@example.com", ["recipient@example.com"], "1 Apr 2022 23:12", 400),
     ])
     def test_fail_empty_content(self, server, event_id, email_subject, email_content, from_email, to_email, timestamp, output):
         payload: dict = {
@@ -88,9 +88,9 @@ class TestPostSavesEmail:
 
 
     @pytest.mark.parametrize("event_id, email_subject, email_content, from_email, to_email, timestamp, output", [
-        (1, "Test Subject", "Test Content", "sender", ["recipient@example.com"], "2016-09-08 00:00:00", 400),
-        (1, "Test Subject", "Test Content", "", ["recipient@example.com"], "2016-09-08 00:00:00", 400),
-        (1, "Test Subject", "Test Content", 1, ["recipient@example.com"], "2016-09-08 00:00:00", 400),
+        (1, "Test Subject", "Test Content", "sender", ["recipient@example.com"], "1 Apr 2022 23:12", 400),
+        (1, "Test Subject", "Test Content", "", ["recipient@example.com"], "1 Apr 2022 23:12", 400),
+        (1, "Test Subject", "Test Content", 1, ["recipient@example.com"], "1 Apr 2022 23:12", 400),
     ])
     def test_fail_wrong_sender_data(self, server, event_id, email_subject, email_content, from_email, to_email, timestamp, output):
         payload: dict = {
@@ -113,8 +113,8 @@ class TestPostSavesEmail:
 
 
     @pytest.mark.parametrize("event_id, email_subject, email_content, from_email, to_email, timestamp, output", [
-        (1, "Test Subject", "Test Content", "sender@example.com", "recipient@example.com", "2016-09-08 00:00:00", 400),
-        (1, "Test Subject", "Test Content", "sender@example.com", "recipient@example.com, recipient2@example.com", "2016-09-08 00:00:00", 400),
+        (1, "Test Subject", "Test Content", "sender@example.com", "recipient@example.com", "1 Apr 2022 23:12", 400),
+        (1, "Test Subject", "Test Content", "sender@example.com", "recipient@example.com, recipient2@example.com", "1 Apr 2022 23:12", 400),
     ])
     def test_fail_recipient_not_list(self, server, event_id, email_subject, email_content, from_email, to_email, timestamp, output):
         payload: dict = {
@@ -137,9 +137,9 @@ class TestPostSavesEmail:
 
 
     @pytest.mark.parametrize("event_id, email_subject, email_content, from_email, to_email, timestamp, output", [
-        (1, "Test Subject", "Test Content", "sender@example.com", ["recipient"], "2016-09-08 00:00:00", 400),
-        (1, "Test Subject", "Test Content", "sender@example.com", ["recipient", "recipient2@example.com"], "2016-09-08 00:00:00", 400),
-        (1, "Test Subject", "Test Content", "sender@example.com", ["recipient", "recipient2"], "2016-09-08 00:00:00", 400),
+        (1, "Test Subject", "Test Content", "sender@example.com", ["recipient"], "1 Apr 2022 23:12", 400),
+        (1, "Test Subject", "Test Content", "sender@example.com", ["recipient", "recipient2@example.com"], "1 Apr 2022 23:12", 400),
+        (1, "Test Subject", "Test Content", "sender@example.com", ["recipient", "recipient2"], "1 Apr 2022 23:12", 400),
     ])
     def test_fail_recipient_wrong_data(self, server, event_id, email_subject, email_content, from_email, to_email, timestamp, output):
         payload: dict = {
@@ -162,8 +162,8 @@ class TestPostSavesEmail:
 
 
     @pytest.mark.parametrize("event_id, email_subject, email_content, from_email, to_email, timestamp, output", [
-        (1, "Test Subject", "Test Content", "sender@example.com", ["recipient@example.com"], "15 Dec 2015 23:12", 400),
-        (1, "Test Subject", "Test Content", "sender@example.com", ["recipient@example.com"], "2016-09-08", 400),
+        (1, "Test Subject", "Test Content", "sender@example.com", ["recipient@example.com"], "2016-09-08 00:00:00", 400),
+        (1, "Test Subject", "Test Content", "sender@example.com", ["recipient@example.com"], "1 Apr 2022", 400),
         (1, "Test Subject", "Test Content", "sender@example.com", ["recipient@example.com"], "", 400),
     ])
     def test_fail_timestamp_wrong_data_format(self, server, event_id, email_subject, email_content, from_email, to_email, timestamp, output):
