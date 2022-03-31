@@ -33,6 +33,13 @@ class SaveEmailPayload(EmailBase):
     schedule_at: datetime = Field(alias="timestamp")
 
 
+    @validator("schedule_at", pre=True)
+    def change_format_to_datetime(cls, v):
+        try:
+            return datetime.strptime(v, "%d %b %Y %H:%M")
+        except ValueError:
+            raise ValueError("Incorrect date format, should be %d %b %Y %H:%M")
+
     @validator("schedule_at")
     def check_schedule_at(cls, v):
         """Difference comparison in seconds"""
