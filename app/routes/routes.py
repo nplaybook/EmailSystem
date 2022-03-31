@@ -1,7 +1,7 @@
 import json
 from typing import Dict, Any
 
-from flask import request, redirect, url_for
+from flask import request
 from flask import Response
 from pydantic import ValidationError
 from sqlalchemy.exc import SQLAlchemyError
