@@ -1,5 +1,4 @@
 import json
-from lib2to3.pytree import Base
 from typing import Dict, Any
 
 from flask import request, redirect, url_for
