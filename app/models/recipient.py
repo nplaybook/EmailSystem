@@ -7,8 +7,9 @@ from .base import Base
 
 
 class Recipient(Base):
-    __tablename__ = "recipients"
+    __tablename__ = "email_recipient"
+
     id = Column(Integer, primary_key=True, nullable=False)
-    email_id = Column(Integer, ForeignKey("emails.id"))
+    email_id = Column(Integer, ForeignKey("email_queue.id"))
     to_email = Column(String)
-    created_at = Column(DateTime, default=datetime.now)    
+    created_at = Column(DateTime, default=datetime.now)
