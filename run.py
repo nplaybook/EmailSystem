@@ -1,6 +1,5 @@
-from app import app, scheduler
+from app import app
 
 
 if __name__ == "__main__":
-    scheduler.start()
     app.run(debug=True)
