@@ -6,4 +6,7 @@ pydantic[email]
 python-dotenv==0.20.0
 Flask-APScheduler==1.12.3
 pytest==7.1.1
+celery==5.2.6
+celery[redis]
+flower==1.0.0
 docker-compose==1.29.2
