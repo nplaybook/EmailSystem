@@ -16,12 +16,3 @@ CELERY_RESULT_BACKEND = os.environ.get("CELERY_RESULT_BACKEND")
 CELERY_ACCEPT_CONTENT = literal_eval(os.environ.get("CELERY_ACCEPT_CONTENT"))
 CELERY_RESULT_SERIALIZER = os.environ.get("CELERY_RESULT_SERIALIZER")
 CELERY_TASK_SERIALIZER = os.environ.get("CELERY_TASK_SERIALIZER")
-
-PAYLOAD_EMAIL = ["event_id", "from_email", "email_subject", "email_content", "schedule_at"]
-PAYLOAD_RECIPIENT = "to_email"
-
-STATUS_PENDING = "PENDING"
-FAIL_STATUS = "FAILED"
-STATUS_SENT = "SENT"
-
-SCHEDULE_LIMIT = 60 * 2
