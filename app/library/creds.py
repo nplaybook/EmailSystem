@@ -4,7 +4,7 @@ from typing import NoReturn, Union
 
 class CredUtils:
 
-    def __init__(self) -> NoReturn:
+    def __init__() -> NoReturn:
         pass
 
     @staticmethod

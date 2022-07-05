@@ -6,7 +6,7 @@ from app.library.typing import JSON, JSON_ARRAY
 
 class OrmUtils:
 
-    def __init__(self) -> NoReturn:
+    def __init__() -> NoReturn:
         pass
 
     @staticmethod
