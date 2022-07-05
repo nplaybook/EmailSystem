@@ -2,18 +2,17 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from celery import Celery
 
-from app.config import (
-    DB_BASE_DIR, DB_DIALECT, DB_NAME,
-    CELERY_BROKER_URL, CELERY_RESULT_BACKEND,
-    CELERY_ACCEPT_CONTENT, CELERY_RESULT_SERIALIZER
-    # CELERY_TASK_SERIALIZER
-)
 
+def init_engine(dialect: str, dir: str, name: str):
+    """Create sqlalchemy engine
 
-def init_engine():
-    """Create sqlalchemy engine"""
+    :param dialect: type of database that will be initiated
+    :param dir: db base directory
+    :param name: db name
+    :return: database engine object
+    """
 
-    URI: str = f"{DB_DIALECT}:///{DB_BASE_DIR}/{DB_NAME}"
+    URI: str = f"{dialect}:///{dir}/{name}"
     return create_engine(URI, echo=False)
 
 
@@ -23,17 +22,25 @@ def init_session():
     return sessionmaker()
 
 
-def init_celery():
-    """Create celery worker"""
+def init_celery(
+    broker: str,
+    backend: str,
+    accept_content: str,
+    result_serializer: str
+) -> Celery:
+    """Create celery worker
 
-    celery = Celery(
-        "tasks",
-        broker=CELERY_BROKER_URL,
-        backend=CELERY_RESULT_BACKEND
-        )
+    :param broker: broker's ip address
+    :param backend: database that will be used to store the result
+    :param accept_content: data type that will be processed
+    :param result_serializer: serialized data type
+    :return: Celery object
+    """
+
+    celery = Celery("tasks", broker=broker, backend=backend)
     celery.conf.update(
         # task_serializer=CELERY_TASK_SERIALIZER,
-        accept_content=CELERY_ACCEPT_CONTENT,
-        result_serializer=CELERY_RESULT_SERIALIZER
+        accept_content=accept_content,
+        result_serializer=result_serializer
     )
     return celery

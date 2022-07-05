@@ -1,4 +1,4 @@
-from flask import Flask, g
+from flask import Flask, g, current_app
 
 from app.extension import (
     init_engine, init_session
@@ -16,7 +16,12 @@ def make_app(config: str) -> Flask:
     app = Flask(__name__)
     app.config.from_pyfile(config)
 
-    # celery = init_celery()
+    # celery = init_celery(
+    #     broker=current_app.config["CELERY_BROKER_URL"],
+    #     backend=current_app.config["CELERY_RESULT_BACKEND"],
+    #     accept_content=current_app.config["CELERY_ACCEPT_CONTENT"],
+    #     result_serializer=current_app.config["CELERY_RESULT_SERIALIZER"]
+    # )
 
     # register blueprint
     from app.blueprint.data import data_bp
@@ -30,11 +35,16 @@ def make_app(config: str) -> Flask:
 
 app = make_app("config.py")
 
+
 # application context
 @app.before_request
 def get_db_con():
     if "session" not in g:
-        db_engine = init_engine()
+        db_engine = init_engine(
+            dialect=current_app.config["DB_DIALECT"],
+            dir=current_app.config["DB_BASE_DIR"],
+            name=current_app.config["DB_NAME"]
+        )
         db_session = init_session()
         g.session = db_session(bind=db_engine)
 

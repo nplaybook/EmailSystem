@@ -1,12 +1,11 @@
 from typing import List
 from datetime import datetime
 from pydantic import (
-    BaseModel,
-    StrictStr, StrictInt, EmailStr,
+    BaseModel, StrictStr, StrictInt, EmailStr,
     Field, validator
 )
 
-from app.config.config import SCHEDULE_LIMIT
+from app.library.const import SCHEDULE_LIMIT
 
 
 class SMTPDetail(BaseModel):
