@@ -1,19 +1,34 @@
 from flask import Flask, g
 
-from app.extension import init_engine, init_session
+from app.extension import (
+    init_engine, init_session
+    # init_celery
+)
 
 
-app = Flask(__name__)
+def make_app(config: str) -> Flask:
+    """Main caller to create Flask appication
+
+    :param config: path where configuration file resides
+    :return app: Flask application
+    """
+
+    app = Flask(__name__)
+    app.config.from_pyfile(config)
+
+    # celery = init_celery()
+
+    # register blueprint
+    from app.blueprint.data import data_bp
+    from app.blueprint.email import email_bp
+
+    app.register_blueprint(data_bp)
+    app.register_blueprint(email_bp)
+
+    return app
 
 
-# register blueprint
-from app.blueprint.data import data_bp
-from app.blueprint.email import email_bp
-
-
-app.register_blueprint(data_bp)
-app.register_blueprint(email_bp)
-
+app = make_app("config.py")
 
 # application context
 @app.before_request
