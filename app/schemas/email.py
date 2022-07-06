@@ -1,42 +1,11 @@
 from typing import List
 from datetime import datetime
 from pydantic import (
-    BaseModel, StrictStr, StrictInt, EmailStr,
-    Field, validator
+    BaseModel, EmailStr, Field, validator
 )
 
+from app.schemas.base import EmailDetail, SMTPDetail
 from app.library.const import SCHEDULE_LIMIT
-
-
-class SMTPDetail(BaseModel):
-    """Base data validation for smtp credentials"""
-
-    email: EmailStr
-    password: StrictStr
-    server: StrictStr
-    port: StrictInt
-
-
-class EmailDetail(BaseModel):
-    """Base data validation for table Email"""
-
-    event_id: int
-    email_subject: StrictStr
-    email_content: StrictStr
-    from_email: EmailStr
-
-
-    @validator("email_subject")
-    @classmethod
-    def check_email_subject(cls, v):
-        assert v != "", "Empty subject is not allowed"
-        return v
-
-    @validator("email_content")
-    @classmethod
-    def check_email_content(cls, v):
-        assert v != "", "Empty content is not allowed"
-        return v
 
 
 class SendDirectly(EmailDetail):
