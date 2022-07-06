@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Literal
 from datetime import datetime
 from pydantic import (
     BaseModel, EmailStr, Field, validator
@@ -38,6 +38,11 @@ class SendLater(EmailDetail):
         return v
 
 
+class SendReport(BaseModel):
+    from_email: EmailStr
+    to_email: List[EmailStr]
+
+
 class EmailDirectlyPayload(BaseModel):
     smtp: SMTPDetail
     email: SendDirectly
@@ -46,3 +51,11 @@ class EmailDirectlyPayload(BaseModel):
 class EmailLaterPayload(BaseModel):
     smtp: SMTPDetail
     email: SendLater
+
+
+class ExportReportPayload(BaseModel):
+    """Base model validation for export data"""
+
+    smtp: SMTPDetail
+    email: SendReport
+    report: Literal["event", "email-provider"]
