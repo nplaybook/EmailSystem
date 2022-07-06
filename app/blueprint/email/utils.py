@@ -1,4 +1,4 @@
-from typing import NoReturn, List, Dict
+from typing import List, Dict
 
 import ssl
 import smtplib
@@ -14,7 +14,7 @@ from app.library.typing import JSON, DB_SESSION
 
 class EmailOps:
 
-    def __init__(self, payload: JSON) -> NoReturn:
+    def __init__(self, payload: JSON):
         """Initialize EmailUtils class which handle all the operations
         necessary to send email.
 
@@ -24,7 +24,7 @@ class EmailOps:
         self.smtp = payload["smtp"]
         self.email = payload["email"]
 
-    def send_email(self, db: DB_SESSION) -> NoReturn:
+    def send_email(self, db: DB_SESSION):
         context = ssl.create_default_context()
         with smtplib.SMTP(self.smtp["server"], self.smtp["port"]) as server:
             # connect and login to email provider
@@ -51,20 +51,21 @@ class EmailOps:
 
 class EmailPrep:
 
-    def __init__(self, email: Email) -> NoReturn:
+    def __init__(self, email: Email):
         self.email = email
 
-    def format_recipient_data(self, key: str = "to_email") -> List[Recipient]:
+    def format_recipient_data(self, email_id: int, key: str = "to_email") -> List[Recipient]:
         """Format list of recipient email to JSON ARRAY format
         that is accepted by Recipient object
 
+        :param email_id: email ID
         :param key: payload key that contains to_email data
         :return: JSON ARRAY of Recipient model
         """
 
         to_email = self.email[key]
         recipients = [
-            {"email_id": self.email_id, "to_email": email} for email in to_email
+            {"email_id": email_id, "to_email": email} for email in to_email
         ]
         return [Recipient(**recipient) for recipient in recipients]
 
@@ -109,13 +110,13 @@ class EmailPrep:
 
 
 # @celery.task(base=SQLAlchemyTask, max_retries=5, default_retry_delay=15)
-# def send_email_task(db: DB_SESSION) -> NoReturn:
-#     """send_email method wrapper to prevent passing self argument as 
-#     an actual argument instead of self-referencing (due to celery.task)
-#     """
+def send_email_task(db: DB_SESSION, payload: JSON):
+    """send_email method wrapper to prevent passing self argument as 
+    an actual argument instead of self-referencing (due to celery.task)
+    """
 
-#     e = EmailUtils()
-#     e.send_email(db)
+    e = EmailOps(payload)
+    e.send_email(db)
 
 
 # @celery.task(base=SQLAlchemyTask, max_retries=5, default_retry_delay=15)
