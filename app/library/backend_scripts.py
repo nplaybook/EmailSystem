@@ -8,26 +8,24 @@ from app.models import Email, Recipient
 
 class DBEmailTransaction:
 
-    def __init__(self, email: Email) -> NoReturn:
-        self.email = email
+    def __init__(self):
+        pass
 
-    def insert_email_record(self, db: DB_SESSION) -> NoReturn:
+    def insert_email_record(self, db: DB_SESSION, email: Email) -> int:
         """Insert email detail to database and assign attribute
         email id to class
 
         :param db: database session from Flask g variable
+        :param email: Email object that will be recorded
+        :return: email id
         """
 
-        db.add(self.email)
+        db.add(email)
         db.commit()
         db.flush()
-        self.email_id = self.email.id
+        self.email_id = email.id
 
-    def insert_recipient_record(
-        self,
-        db: DB_SESSION,
-        recipients: List[Recipient]
-    ) -> NoReturn:
+    def insert_recipient_record(self, db: DB_SESSION, recipients: List[Recipient]):
         """Insert recipient data from `to_email` key
 
         :param db: database session from Flask g variable
@@ -36,14 +34,15 @@ class DBEmailTransaction:
         db.add_all(recipients)
         db.commit()
 
-    def update_email_status(self, db: DB_SESSION) -> NoReturn:
+    def update_email_status(self, db: DB_SESSION, email_id: int):
         """Update email status to SENT or FAIL
 
         :param db: database session in Flask g variable
+        :param email_id: email ID
         """
 
         db.query(Email)\
-            .filter(Email.id == self.email_id)\
+            .filter(Email.id == email_id)\
             .update({"status": STATUS_SENT})
         db.commit()
 
