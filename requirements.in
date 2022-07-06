@@ -10,3 +10,4 @@ celery==5.2.6
 celery[redis]
 flower==1.0.0
 docker-compose==1.29.2
+openpyxl==3.0.10
