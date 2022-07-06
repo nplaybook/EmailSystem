@@ -14,3 +14,5 @@ SCHEDULE_LIMIT = 60 * 2
 
 # Excel file
 FILE_BASE_PATH = f"{os.getcwd()}/"
+EXCEL_TIME_FORMAT = "%d %b %Y, %H:%M"
+EXCEL_EXTENSION = "xlsx"
