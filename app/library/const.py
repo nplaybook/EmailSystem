@@ -13,6 +13,11 @@ STATUS_SENT = "SENT"
 SCHEDULE_LIMIT = 60 * 2
 
 # Excel file
-FILE_BASE_PATH = f"{os.getcwd()}/"
+FILE_BASE_PATH = f"{os.getcwd()}"
 EXCEL_TIME_FORMAT = "%d %b %Y, %H:%M"
 EXCEL_EXTENSION = "xlsx"
+TO_MEGA_BYTES = 1024 * 1024
+MAX_FILE_SIZE = 10  # 10 mbs
+
+# Encryption software
+ENCRYPT_SOFTWARE_DIR = "/home/nplaybook/msoffice/"
