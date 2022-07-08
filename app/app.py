@@ -1,8 +1,7 @@
 from flask import Flask, g, current_app
 
 from app.extension import (
-    init_engine, init_session
-    # init_celery
+    init_engine, init_session, init_celery
 )
 
 
@@ -16,13 +15,6 @@ def make_app(config: str) -> Flask:
     app = Flask(__name__)
     app.config.from_pyfile(config)
 
-    # celery = init_celery(
-    #     broker=current_app.config["CELERY_BROKER_URL"],
-    #     backend=current_app.config["CELERY_RESULT_BACKEND"],
-    #     accept_content=current_app.config["CELERY_ACCEPT_CONTENT"],
-    #     result_serializer=current_app.config["CELERY_RESULT_SERIALIZER"]
-    # )
-
     # register blueprint
     from app.blueprint.data import data_bp
     from app.blueprint.email import email_bp
@@ -34,7 +26,12 @@ def make_app(config: str) -> Flask:
 
 
 app = make_app("config.py")
-
+# celery = init_celery(
+#     broker=current_app.config["CELERY_BROKER_URL"],
+#     backend=current_app.config["CELERY_RESULT_BACKEND"],
+#     accept_content=current_app.config["CELERY_ACCEPT_CONTENT"],
+#     result_serializer=current_app.config["CELERY_RESULT_SERIALIZER"]
+# )
 
 # application context
 @app.before_request
